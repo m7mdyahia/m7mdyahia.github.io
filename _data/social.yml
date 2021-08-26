@@ -1,0 +1,17 @@
+# RSS specific
+rss:
+feed:
+  path: feed.xml  # RSS feed path
+
+# Share button options
+share:
+  email: true
+  facebook: true
+  linkedin: true
+  pinterest:
+  pocket:
+  reddit:
+  tumblr:
+  twitter: true
+  wordpress:
+

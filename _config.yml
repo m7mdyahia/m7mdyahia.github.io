@@ -1,42 +1,56 @@
-# Site settings
-title: Mohammad Yahia
-description: "مدونة"  # used in site head
+# SITE CONFIGURATION
+baseurl: ""
+url: "https://sylhare.github.io"
 
-# register on google analytics and replace this token
-google_analytics: UA-75681059-1
-# disque comments are broken if you send http:// along with url, this url is same as the one given on disqus
-# Deleting the value would remove it from footer.
-#disqus_url: fekracomputers.com
-#disqus_id: fekracomputers
-# register on feedburner and replace this url. Deleting the value will remove it from footer.
-#feedburner_url: https://feedburner.google.com/fb/a/mailverify?uri=programmer-wannabe&amp;loc=en_US
+# THEME-SPECIFIC CONFIGURATION
+title: Mohammad Yahia      محمد يحيى                                # site's title
+description: "A website with blog posts and pages"      # used by search engines
+avatar: assets/img/triangle.png                         # Empty for no avatar in navbar
+favicon: assets/favicon.ico                             # Icon displayed in the tab
 
-# footer details. Deleting the value would remove it from footer.
-github_username:  m7mdyahia
-facebook_username:  moda.yahia
-email: moda.yahia@gmail.com
-stackoverflow_username: 3061221/mohammad-yahia
-#twitter_username : fekracomputers
-copyright_name: Mohammad Yahia
-rss : true
+# Header and footer text
+header_text: Welcome on board  # Change Blog header text
+header_feature_image: assets/img/pexels/triangular.jpeg
+footer_text: >
+  Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/sylhare/Type-on-Strap">Type on Strap</a>
 
-# used for portfolio on home page
-collections:
-  - portfolio
+# Blog
+excerpt: true                                           # Or "truncate" (first 250 characters), "false" to disable
+post_navigation: true
+color_image: /assets/img/lineart.png                    # A bit transparent for color posts.
 
-# used to estimate reading time
-wpm: 150
+# Features
+# More in the _data folder for share buttons, author and language
+# For layout customization, go to the "_sass > base" folder, and check "_variables.scss"
+katex: true                                             # Enable if using math markup
+mermaid: true                                           # Enable mermaid-js for sequence and diagrams
+google_analytics:                                       # Tracking ID, e.g. "UA-000000-01"
+cookie_consent: false                                   # To respect the usage of cookies
+color_theme: auto                                       # auto, dark or light
 
-# Build settings
-markdown: kramdown
-highlighter: rouge
-exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
-port: 8888
-permalink: /blog/:title
+# Comments
+comments:
+  disqus_shortname:                                     # Your discus shortname for comments
+  cusdis_app_id:                                        # Your cusdis data-app-id
+  utterances:                                           # Enable by filling below information. For more info, go to https://utteranc.es
+    repo:                                               # your public comments repository (e.g. owner/repo)
+    issue-term:                                         # Issue term (e.g. "comment" consider issues with this word in the title as comments)
 
-# jekyll-paginate. for paginating blog posts.
+# PAGINATION
 paginate: 5
-paginate_path: blog/page:num
+paginate_path: "/blog/page:num"
 
-# gem dependencies
-gems: [jekyll-paginate, jekyll-feed, jekyll-gist]
+# PORTFOLIO
+collections:
+  portfolio:
+    output: true
+    permalink: /:collection/:name
+
+# BUILD SETTINGS
+sass:
+  style: compressed
+plugins: [jekyll-paginate, jekyll-seo-tag, jekyll-feed]
+exclude: [".jekyll-cache", ".idea", "vendor/*", "assets/node_modules/*"]
+
+# theme: type-on-strap                                  # if using the theme as a jekyll theme gem
+remote_theme: sylhare/Type-on-Strap                     # If using as a remote_theme in github

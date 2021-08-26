@@ -2,41 +2,34 @@
 layout: default
 ---
 
-<!-- Page Header -->
-<header class="intro-header" style="background-image: url('/{{ page.header-img }}')">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                    <h1>{{ page.title }}</h1>
-                    <hr class="small">
-                    <span class="subheading">
-                        {% if page.description == "!!SHOWTAGSINSTEADOFDESCRIPTION!!" %}
-                            {% for tag in page.tags %}
-                                <a href="/blog/tags/{{ tag }}" style="text-decoration: normal; font-weight: normal; color: #ffffff;"><i class="fa fa-tag"></i>{{ tag }}</a>  
-                            {% endfor %}
-                        {% else %}
-                            {{ page.description }}
-                        {% endif %}
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
+<article {% if page.feature-img %}class="feature-image"{% endif %}>
 
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-            {{ content }}
-            <br>
-            {% if page.comments %}
-                {% include disqus_comments.html %}
-            {% endif %}
-            <br>
-        </div>
+  <header id="main" style="background-image: url('{{ page.feature-img | relative_url }}')">
+    <div class="title-padder">
+      {% if page.hide_title %}
+        <div class="feature-image-padding"></div>
+      {% else %}
+        <h1 id="{{ page.title | default: "" | cgi_escape }}" class="title"> {{ page.title }}</h1>
+        {% if page.subtitle %}
+        <h2 class="subtitle">{{ page.subtitle }}</h2>
+        {% endif %}
+      {% endif %}
     </div>
-</div>
+  </header>
 
-<hr>
+  <section class="post-content">
+  {% if page.bootstrap %}
+  <div class="bootstrap-iso">
+  {% endif %}
+	{{ content }}
+  {% if page.bootstrap %}
+  </div>
+  {% endif %}
+  </section>
+
+
+  <!-- Tag list for portfolio -->
+  {% capture tag_list %}{{ page.tags | join: "|"}}{% endcapture %}
+  {% include default/tags_list.html tags=tag_list %}
+
+</article>
