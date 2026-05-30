@@ -2,7 +2,7 @@
 title: How to make a fixed header with scrollable content
 description: A minimal HTML structure for fixed headers with a scrollable content area underneath.
 date: 2025-02-17
-tags: [css, html, layout, frontend]
+tags: [css, positioning, scrollable-content, ui-patterns]
 ---
 Usually we need a header that stays fixed at the top of the HTML page and below it a scrollable space.
 ```html
