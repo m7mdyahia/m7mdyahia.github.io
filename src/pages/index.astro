@@ -1,0 +1,114 @@
+---
+const profile = {
+  name: 'MOHAMMAD YAHIA',
+  location: 'New Cairo, Egypt',
+  phone: '+201099631638',
+  email: 'mohammad.yahia.jad@gmail.com',
+  title: 'Senior Software Engineer and Acting Architect',
+  summary:
+    'I design and scale high-throughput distributed systems with Java, Spring Boot, AWS, microservices, and event-driven architectures.',
+  linkedin: 'https://www.linkedin.com/in/mohammad-yahia-jad-054593110/',
+  github: 'https://github.com/mohammad-yahia',
+  cvPath: '/Mohammad_Yahia_CV.pdf'
+};
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={`${profile.name} - personal website and blog`} />
+    <title>{profile.name}</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, Segoe UI, Roboto, Arial, sans-serif;
+        line-height: 1.6;
+        background: #0f172a;
+        color: #e2e8f0;
+      }
+
+      .wrap {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 3rem 1.25rem;
+      }
+
+      .card {
+        background: #111827;
+        border: 1px solid #334155;
+        border-radius: 16px;
+        padding: 1.5rem;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 2rem;
+      }
+
+      .title {
+        color: #93c5fd;
+        margin: 0.35rem 0 1rem;
+        font-weight: 600;
+      }
+
+      .meta {
+        margin: 0;
+        color: #cbd5e1;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 1.25rem;
+      }
+
+      .btn {
+        display: inline-block;
+        text-decoration: none;
+        border-radius: 10px;
+        padding: 0.6rem 0.95rem;
+        font-weight: 600;
+        border: 1px solid #64748b;
+        color: #f8fafc;
+      }
+
+      .btn.primary {
+        background: #2563eb;
+        border-color: #2563eb;
+      }
+
+      .hint {
+        margin-top: 1rem;
+        font-size: 0.95rem;
+        color: #94a3b8;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <section class="card">
+        <h1>{profile.name}</h1>
+        <p class="title">{profile.title}</p>
+        <p>{profile.summary}</p>
+        <p class="meta">{profile.location} | {profile.phone} | {profile.email}</p>
+
+        <div class="actions">
+          <a class="btn primary" href={profile.cvPath} target="_blank" rel="noopener noreferrer">View CV (PDF)</a>
+          <a class="btn" href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a class="btn" href={profile.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+
+        <p class="hint">Next: I can add a Blog section with Markdown posts, tags (#java #aws), and search.</p>
+      </section>
+    </main>
+  </body>
+</html>
