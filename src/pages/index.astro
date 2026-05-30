@@ -27,7 +27,15 @@ const tags = [...new Set([...blogs.flatMap((item) => item.data.tags), ...tips.fl
 const icons = {
   linkedin: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38zm-1.69-5.53A1.97 1.97 0 1 0 5.3 6.9a1.97 1.97 0 0 0-.05-3.93M20.45 20h-3.37v-5.58c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.44-2.14 2.93V20H9.72V8.5h3.24v1.57H13c.45-.86 1.56-1.77 3.22-1.77 3.45 0 4.08 2.27 4.08 5.22z"></path></svg>`,
   github: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.6 2 12.26c0 4.53 2.87 8.37 6.84 9.72.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.62-3.37-1.21-3.37-1.21-.46-1.2-1.11-1.53-1.11-1.53-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.04 1.03-2.76-.1-.27-.45-1.3.1-2.72 0 0 .84-.28 2.75 1.05A9.3 9.3 0 0 1 12 6.84c.85 0 1.7.12 2.5.36 1.9-1.33 2.74-1.05 2.74-1.05.55 1.42.2 2.45.1 2.72.64.72 1.03 1.64 1.03 2.76 0 3.93-2.35 4.79-4.59 5.04.36.32.68.93.68 1.88 0 1.36-.01 2.46-.01 2.79 0 .27.18.6.69.49A10.28 10.28 0 0 0 22 12.26C22 6.6 17.52 2 12 2"></path></svg>`,
-  mail: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2m0 1.5v.3l8 5.2 8-5.2v-.3zm16 9V9.58l-7.46 4.85a1 1 0 0 1-1.08 0L4 9.58v6.92z"></path></svg>`
+  mail: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2m0 1.5v.3l8 5.2 8-5.2v-.3zm16 9V9.58l-7.46 4.85a1 1 0 0 1-1.08 0L4 9.58v6.92z"></path></svg>`,
+  'Share2': `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>`,
+  'Database': `<svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4.03 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"></path></svg>`,
+  'Cloud': `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2.59 12A2 2 0 0 1 2 10.82V3a2 2 0 0 1 2-2h7.82a2 2 0 0 1 1.41.59l8.36 8.36a2 2 0 0 1 0 2.82z"></path><circle cx="16.5" cy="5.5" r="1.5"></circle></svg>`,
+  'ShieldCheck': `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="10 16 13 19 20 12"></polyline></svg>`,
+  'Workflow': `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="4" r="2"></circle><circle cx="19" cy="9" r="2"></circle><circle cx="19" cy="19" r="2"></circle><circle cx="12" cy="19" r="2"></circle><circle cx="5" cy="14" r="2"></circle><line x1="12" y1="6" x2="12" y2="17"></line><line x1="18" y1="11" x2="13" y2="17"></line><line x1="6" y1="12" x2="11" y2="17"></line></svg>`,
+  'Monitor': `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>`,
+  'Sparkles': `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l3.09 6.26L22 9.27l-7.9 6.33L16.18 22 12 18.18 7.82 22l1.9-6.4L2 9.27l6.91-1.01L12 3z"></path></svg>`,
+  'Zap': `<svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>`
 };
 ---
 
@@ -62,8 +70,16 @@ const icons = {
     {
       profile.skills.map((skill) => (
         <article class="card skill-card">
-          <h3>{skill.title}</h3>
-          <p>{skill.description}</p>
+          <div class="skill-header">
+            <div class="skill-icon" set:html={icons[skill.icon as keyof typeof icons]} />
+            <h3>{skill.title}</h3>
+          </div>
+          <p class="skill-description">{skill.description}</p>
+          <div class="skill-tags">
+            {skill.tags.map((tag) => (
+              <span class="skill-tag">{tag}</span>
+            ))}
+          </div>
         </article>
       ))
     }

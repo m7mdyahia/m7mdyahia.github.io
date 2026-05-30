@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogSidebar from '../../components/BlogSidebar.astro';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog')).sort(
@@ -9,25 +10,49 @@ const getPostSlug = (id: string) => id.replace(/\.md$/, '');
 ---
 
 <BaseLayout title="Blog | Mohammad Yahia" description="Articles and notes by Mohammad Yahia">
-  <section class="card list">
-    <span class="eyebrow">Blog</span>
-    <h1>Articles</h1>
-    <p class="lead">Short notes about architecture, backend engineering, and reliable delivery.</p>
-  </section>
+  <div class="blog-layout">
+    <main class="blog-main">
+      <section class="card list">
+        <span class="eyebrow">Blog</span>
+        <h1>Articles</h1>
+        <p class="lead">Articles and notes  about architecture, backend engineering, and reliable delivery.</p>
+      </section>
 
-  <section class="list" style="margin-top: 1.2rem;">
-    {
-      posts.map((post) => (
-        <article class="card post-card">
-          <p class="meta">{post.data.date.toLocaleDateString('en-GB')}</p>
-          <h2><a href={`/blog/${getPostSlug(post.id)}/`}>{post.data.title}</a></h2>
-          <p>{post.data.description}</p>
-          <div class="pills">
-            {post.data.tags.map((tag) => <a class="pill" href={`/blog/tags/${tag}/`}>#{tag}</a>)}
-          </div>
-        </article>
-      ))
-    }
-  </section>
+      <section class="list" style="margin-top: 1.2rem;">
+        {
+          posts.map((post) => (
+            <article class="card post-card">
+              <p class="meta">{post.data.date.toLocaleDateString('en-GB')}</p>
+              <h2><a href={`/blog/${getPostSlug(post.id)}/`}>{post.data.title}</a></h2>
+              <p>{post.data.description}</p>
+              <div class="pills">
+                {post.data.tags.map((tag) => <a class="pill" href={`/blog/tags/${tag}/`}>#{tag}</a>)}
+              </div>
+            </article>
+          ))
+        }
+      </section>
+    </main>
+
+    <BlogSidebar posts={posts} type="blog" />
+  </div>
 </BaseLayout>
+
+<style>
+  .blog-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 2.5rem;
+  }
+
+  .blog-main {
+    min-width: 0;
+  }
+
+  @media (max-width: 1040px) {
+    .blog-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
 

@@ -1,0 +1,99 @@
+---
+interface Props {
+  currentPostId?: string;
+  posts: any[];
+  type: 'blog' | 'tips';
+}
+
+const { currentPostId, posts, type } = Astro.props;
+
+const getSlug = (id: string) => id.replace(/\.md$/, '');
+const getHref = (id: string) => `/${type}/${getSlug(id)}/`;
+---
+
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <h3>Recent Posts</h3>
+  </div>
+  <nav class="sidebar-nav">
+    {
+      posts.slice(0, 10).map((item) => (
+        <a
+          href={getHref(item.id)}
+          class:list={{
+            'sidebar-link': true,
+            'active': currentPostId === item.id
+          }}
+          title={item.data.title}
+        >
+          <div class="sidebar-link-date">{item.data.date.toLocaleDateString('en-GB')}</div>
+          <div class="sidebar-link-title">{item.data.title}</div>
+        </a>
+      ))
+    }
+  </nav>
+</aside>
+
+<style>
+  .sidebar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 1.6rem;
+    position: sticky;
+    top: 5.5rem;
+    height: fit-content;
+  }
+
+  .sidebar-header {
+    margin-bottom: 1.2rem;
+  }
+
+  .sidebar-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .sidebar-link {
+    display: block;
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--text);
+    transition: background-color 0.2s ease, color 0.2s ease;
+    border-left: 3px solid transparent;
+  }
+
+  .sidebar-link:hover {
+    background-color: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  .sidebar-link.active {
+    background-color: var(--accent-soft);
+    color: var(--accent);
+    border-left-color: var(--accent);
+  }
+
+  .sidebar-link-date {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .sidebar-link-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.3;
+    word-break: break-word;
+  }
+</style>
+

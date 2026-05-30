@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import BlogSidebar from '../components/BlogSidebar.astro';
 import { getCollection } from 'astro:content';
 
 const tips = (await getCollection('tips')).sort(
@@ -9,25 +10,49 @@ const getTipSlug = (id: string) => id.replace(/\.md$/, '');
 ---
 
 <BaseLayout title="Tips | Mohammad Yahia" description="Short engineering tips by Mohammad Yahia">
-  <section class="card list">
-    <span class="eyebrow">Tips</span>
-    <h1>Practical Engineering Tips</h1>
-    <p class="lead">Small ideas and rules of thumb that help keep systems more reliable, maintainable, and easier to operate.</p>
-  </section>
+  <div class="tips-layout">
+    <main class="tips-main">
+      <section class="card list">
+        <span class="eyebrow">Tips</span>
+        <h1>Practical Engineering Tips</h1>
+        <p class="lead">Small ideas and rules of thumb that help keep systems more reliable, maintainable, and easier to operate.</p>
+      </section>
 
-  <section class="skills-grid" style="margin-top: 1.2rem;">
-    {
-      tips.map((tip) => (
-        <article class="card skill-card">
-          <p class="meta">{tip.data.date.toLocaleDateString('en-GB')}</p>
-          <h3><a href={`/tips/${getTipSlug(tip.id)}/`}>{tip.data.title}</a></h3>
-          <p>{tip.data.description}</p>
-          <div class="pills">
-            {tip.data.tags.map((tag) => <span class="pill">#{tag}</span>)}
-          </div>
-        </article>
-      ))
-    }
-  </section>
+      <section class="skills-grid" style="margin-top: 1.2rem;">
+        {
+          tips.map((tip) => (
+            <article class="card skill-card">
+              <p class="meta">{tip.data.date.toLocaleDateString('en-GB')}</p>
+              <h3><a href={`/tips/${getTipSlug(tip.id)}/`}>{tip.data.title}</a></h3>
+              <p>{tip.data.description}</p>
+              <div class="pills">
+                {tip.data.tags.map((tag) => <span class="pill">#{tag}</span>)}
+              </div>
+            </article>
+          ))
+        }
+      </section>
+    </main>
+
+    <BlogSidebar posts={tips} type="tips" />
+  </div>
 </BaseLayout>
+
+<style>
+  .tips-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 2.5rem;
+  }
+
+  .tips-main {
+    min-width: 0;
+  }
+
+  @media (max-width: 1040px) {
+    .tips-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
 

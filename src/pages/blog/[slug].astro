@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogSidebar from '../../components/BlogSidebar.astro';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -16,19 +17,46 @@ type Props = {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+const allPosts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
 ---
 
 <BaseLayout title={`${post.data.title} | Blog`} description={post.data.description}>
-  <article class="card prose">
-    <p class="meta">{post.data.date.toLocaleDateString('en-GB')}</p>
-    <h1>{post.data.title}</h1>
-    <p class="lead">{post.data.description}</p>
-    <div class="pills">
-      {post.data.tags.map((tag) => <a class="pill" href={`/blog/tags/${tag}/`}>#{tag}</a>)}
-    </div>
-    <div style="margin-top: 1.2rem;">
-      <Content />
-    </div>
-  </article>
+  <div class="blog-layout">
+    <main class="blog-main">
+      <article class="card prose">
+        <p class="meta">{post.data.date.toLocaleDateString('en-GB')}</p>
+        <h1>{post.data.title}</h1>
+        <p class="lead">{post.data.description}</p>
+        <div class="pills">
+          {post.data.tags.map((tag) => <a class="pill" href={`/blog/tags/${tag}/`}>#{tag}</a>)}
+        </div>
+        <div style="margin-top: 1.2rem;">
+          <Content />
+        </div>
+      </article>
+    </main>
+
+    <BlogSidebar posts={allPosts} currentPostId={post.id} type="blog" />
+  </div>
 </BaseLayout>
+
+<style>
+  .blog-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 2.5rem;
+  }
+
+  .blog-main {
+    min-width: 0;
+  }
+
+  @media (max-width: 1040px) {
+    .blog-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
 
