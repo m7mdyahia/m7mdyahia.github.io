@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const tips = await getCollection('tips');
+  return tips.map((tip) => ({
+    params: { slug: tip.id.replace(/\.md$/, '') },
+    props: { tip }
+  }));
+}
+
+type Props = {
+  tip: CollectionEntry<'tips'>;
+};
+
+const { tip } = Astro.props;
+const { Content } = await render(tip);
+---
+
+<BaseLayout title={`${tip.data.title} | Tips`} description={tip.data.description}>
+  <article class="card prose">
+    <p class="meta">{tip.data.date.toLocaleDateString('en-GB')}</p>
+    <h1>{tip.data.title}</h1>
+    <p class="lead">{tip.data.description}</p>
+    <div class="pills">
+      {tip.data.tags.map((tag) => <span class="pill">#{tag}</span>)}
+    </div>
+    <div style="margin-top: 1.2rem;">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+

@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { profile } from '../data/profile';
+import CvContent from '../content/cv/mohammad-yahia.md';
+---
+
+<BaseLayout title={`${profile.name} | CV`} description={`Curriculum vitae for ${profile.name}`}>
+  <section class="card cv-hero">
+    <div class="cv-hero-copy">
+      <span class="eyebrow">Resume</span>
+      <h1>{profile.name}</h1>
+      <p class="lead">{profile.role}</p>
+      <p class="meta">{profile.location} · {profile.email} · {profile.phone}</p>
+    </div>
+
+    <div class="cv-actions-panel">
+      <a class="button primary" href={profile.cvPath} target="_blank" rel="noreferrer">Open PDF</a>
+      <a class="button" href={profile.cvPath} download>Download PDF</a>
+      <a class="button" href={`mailto:${profile.email}`}>Contact me</a>
+    </div>
+  </section>
+
+  <section class="card prose cv-prose">
+    <CvContent />
+  </section>
+</BaseLayout>
+

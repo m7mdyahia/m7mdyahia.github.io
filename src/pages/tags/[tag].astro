@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const blogs = await getCollection('blog');
+  const tips = await getCollection('tips');
+  const tags = [...new Set([...blogs.flatMap((post) => post.data.tags), ...tips.flatMap((tip) => tip.data.tags)])];
+
+  return tags.map((tag) => ({
+    params: { tag },
+    props: {
+      tag,
+      blogs: blogs.filter((post) => post.data.tags.includes(tag)),
+      tips: tips.filter((tip) => tip.data.tags.includes(tag))
+    }
+  }));
+}
+
+type Props = {
+  tag: string;
+  blogs: CollectionEntry<'blog'>[];
+  tips: CollectionEntry<'tips'>[];
+};
+
+const { tag, blogs, tips } = Astro.props;
+const blogSlug = (id: string) => id.replace(/\.md$/, '');
+const tipSlug = (id: string) => id.replace(/\.md$/, '');
+---
+
+<BaseLayout title={`#${tag} | Tags`} description={`Content tagged with #${tag}`}>
+  <section class="card list">
+    <span class="eyebrow">Tag</span>
+    <h1>#{tag}</h1>
+    <p class="lead">{blogs.length + tips.length} item(s) across blog and tips.</p>
+  </section>
+
+  {blogs.length > 0 && (
+    <section class="list" style="margin-top: 1.2rem;">
+      <h2>Blog</h2>
+      {
+        blogs.map((post) => (
+          <article class="card post-card">
+            <p class="meta">{post.data.date.toLocaleDateString('en-GB')}</p>
+            <h3><a href={`/blog/${blogSlug(post.id)}/`}>{post.data.title}</a></h3>
+            <p>{post.data.description}</p>
+          </article>
+        ))
+      }
+    </section>
+  )}
+
+  {tips.length > 0 && (
+    <section class="list" style="margin-top: 1.2rem;">
+      <h2>Tips</h2>
+      {
+        tips.map((tip) => (
+          <article class="card post-card">
+            <p class="meta">{tip.data.date.toLocaleDateString('en-GB')}</p>
+            <h3><a href={`/tips/${tipSlug(tip.id)}/`}>{tip.data.title}</a></h3>
+            <p>{tip.data.description}</p>
+          </article>
+        ))
+      }
+    </section>
+  )}
+</BaseLayout>
+

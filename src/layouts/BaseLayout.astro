@@ -1,0 +1,109 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Personal website and blog' } = Astro.props;
+const pathname = Astro.url.pathname;
+const navItems = [
+  { href: '/', label: 'Home' },
+  { href: '/cv', label: 'About' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/tips', label: 'Tips' }
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>{title}</title>
+    <script is:inline>
+      (() => {
+        try {
+          const saved = localStorage.getItem('theme');
+          const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', saved ?? preferred);
+        } catch {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a href="/" class="brand">Mohammad Yahia</a>
+        <nav class="nav" aria-label="Primary navigation">
+          {
+            navItems.map((item) => {
+              const active = item.href === '/' ? pathname === '/' : pathname === item.href || pathname.startsWith(`${item.href}/`);
+              return (
+                <a href={item.href} class:list={{ 'nav-link': true, active }}>
+                  {item.label}
+                </a>
+              );
+            })
+          }
+          <button class="button theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme" title="Toggle theme">
+            <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2.5M12 19.5V22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"></path>
+            </svg>
+            <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>
+            </svg>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page">
+      <div class="container">
+        <slot />
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container meta">
+        Built with <a href="https://astro.build/" target="_blank" rel="noreferrer">Astro</a>
+        and hosted on <a href="https://pages.github.com/" target="_blank" rel="noreferrer">GitHub Pages</a>.
+      </div>
+    </footer>
+
+    <script is:inline>
+      (() => {
+        const toggle = document.getElementById('theme-toggle');
+        if (!toggle) return;
+
+        const updateLabel = () => {
+          const current = document.documentElement.getAttribute('data-theme') ?? 'light';
+          const nextMode = current === 'dark' ? 'light' : 'dark';
+          toggle.setAttribute('aria-label', `Switch to ${nextMode} mode`);
+          toggle.setAttribute('title', `Switch to ${nextMode} mode`);
+        };
+
+        toggle.addEventListener('click', () => {
+          const current = document.documentElement.getAttribute('data-theme') ?? 'light';
+          const next = current === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          try {
+            localStorage.setItem('theme', next);
+          } catch {}
+          updateLabel();
+        });
+
+        updateLabel();
+      })();
+    </script>
+  </body>
+</html>
+
