@@ -297,6 +297,12 @@ a {
   margin-top: 1.4rem;
 }
 
+.skills-cta-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.2rem;
+}
+
 .profile-photo {
   width: 100%;
   aspect-ratio: 4 / 5;

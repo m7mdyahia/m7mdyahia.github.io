@@ -1,7 +1,7 @@
 # **MOHAMMAD YAHIA**
 
 **New Cairo, Egypt** | **mohammad.yahia.jad@gmail.com**
-  [**LinkedIn Profile**](https://www.linkedin.com/in/mohammad-yahia-jad-054593110/) | [**GitHub Profile**](https://github.com/mohammad-yahia)
+  [**LinkedIn Profile**](https://www.linkedin.com/in/mohammad-yahia-jad-054593110/) | [**GitHub Profile**](https://github.com/m7mdyahia)
 
   
 

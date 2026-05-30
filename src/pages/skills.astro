@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SkillsGrid from '../components/SkillsGrid.astro';
+import { profile } from '../data/profile';
+import { getCollection } from 'astro:content';
+
+const blogs = await getCollection('blog');
+const tips = await getCollection('tips');
+const tags = [...new Set([...blogs.flatMap((item) => item.data.tags), ...tips.flatMap((item) => item.data.tags)])]
+  .sort((a, b) => a.localeCompare(b));
+---
+
+<BaseLayout title="Skills | Mohammad Yahia" description="Full skills and technologies matrix for Mohammad Yahia">
+  <section class="section-heading">
+    <span class="eyebrow">My Skills</span>
+    <h1>Full Skills & Technologies Matrix</h1>
+    <p class="lead">A complete view of architecture, platform, and delivery capabilities across backend, cloud, security, and AI-assisted engineering.</p>
+  </section>
+
+  <SkillsGrid skills={profile.skills} />
+
+  <section class="section-heading" style="margin-top: 2rem;">
+    <span class="eyebrow">Hashtags</span>
+    <h2>Topics I write about most often.</h2>
+  </section>
+
+  <section class="card">
+    <div class="pills">
+      {tags.map((tag) => <a class="pill" href={`/tags/${tag}/`}>#{tag}</a>)}
+    </div>
+  </section>
+</BaseLayout>
+

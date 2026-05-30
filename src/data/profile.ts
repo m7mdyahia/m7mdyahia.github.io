@@ -6,7 +6,7 @@ export const profile = {
   location: 'New Cairo, Egypt',
   email: 'mohammad.yahia.jad@gmail.com',
   linkedin: 'https://www.linkedin.com/in/mohammad-yahia-75b65565/',
-  github: 'https://github.com/mohammad-yahia',
+  github: 'https://github.com/m7mdyahia',
   cvPath: '/Mohammad_Yahia_CV.pdf',
   socialLinks: [
     {
@@ -16,7 +16,7 @@ export const profile = {
     },
     {
       label: 'GitHub',
-      href: 'https://github.com/mohammad-yahia',
+      href: 'https://github.com/m7mdyahia',
       icon: 'github'
     },
     {
