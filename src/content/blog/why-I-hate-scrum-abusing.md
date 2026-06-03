@@ -1,6 +1,6 @@
 ---
 title: "Why I Hate Scrum: Forcing Software Engineering Into a Box"
-description: "An architectural critique of how modern Scrum mechanics stifle creative engineering, weaponize velocity, and fail to account for technical uncertainty.
+description: "An architectural critique of how modern Scrum mechanics stifle creative engineering, weaponize velocity, and fail to account for technical uncertainty."
 date: 2025-08-01
 tags: ["agile", "scrum", "engineering-culture", "process-improvement"]
 ---

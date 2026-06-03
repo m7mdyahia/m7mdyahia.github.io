@@ -1,7 +1,7 @@
 ---
 title: "Respecting the Craft: Why I Explicitly Invest in My Engineering Tools"
 description: "A personal story on why high-end developer tooling isn't an administrative expense—it's a fundamental requirement for professional software craftsmanship."
-pubDate: 2025-07-15
+date: 2025-07-15
 tags: ["developer-tools", "intellij-idea", "productivity", "code-craftsmanship"]
 ---
 
