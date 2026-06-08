@@ -12,7 +12,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^6.4.2"
+    "astro": "^6.4.4"
   },
   "devDependencies": {
     "prettier": "^3.6.2"
