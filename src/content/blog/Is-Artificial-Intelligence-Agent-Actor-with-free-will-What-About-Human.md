@@ -3,6 +3,7 @@ title: Is Artificial Intelligence Agent = Act on will? What About Human?
 description: A philosophical and architectural essay on whether autonomous AI agents possess genuine free will, how intention is algorithmically and humanly formed, and why the illusion of independent action leads us back to classical compatibilism.
 date: 2026-06-01
 tags: [ai, philosophy, agency, freewill, determinism, causality, theology]
+featured: true
 ---
 ## Overview: The Rise of the Agent and the Question of Will
 

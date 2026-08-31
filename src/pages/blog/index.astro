@@ -6,8 +6,8 @@ const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime()
 );
 
-const featuredPost = posts[0];
-const remainingPosts = posts.slice(1);
+const featuredPost = posts.find((p) => p.data.featured) || posts.find((p) => p.id.toLowerCase().includes('free-will')) || posts[0];
+const remainingPosts = posts.filter((p) => p.id !== featuredPost?.id);
 
 const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort((a, b) => a.localeCompare(b));
 const getPostSlug = (id: string) => id.replace(/\.md$/, '');
@@ -44,7 +44,7 @@ const getPostSlug = (id: string) => id.replace(/\.md$/, '');
         <div class="featured-post-content">
           <div class="featured-badge">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <span>Latest Article</span>
+            <span>Featured Article</span>
           </div>
           
           <h2 class="featured-post-title">
