@@ -1145,49 +1145,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ==========================================================================
-   Watchlist Grid
-   ========================================================================== */
-
-.watch-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.75rem;
-}
-
-.watch-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 1.75rem;
-  box-shadow: var(--shadow);
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  transition: all 0.25s ease;
-}
-
-.watch-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--accent);
-  box-shadow: var(--shadow-lg);
-}
-
-.watch-type-tag {
-  display: inline-flex;
-  align-items: center;
-  width: fit-content;
-  padding: 0.2rem 0.6rem;
-  border-radius: 6px;
-  background: var(--accent-soft);
-  color: var(--accent);
-  border: 1px solid var(--accent-border);
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-/* ==========================================================================
-   Curated Recommendations
+   Curated Recommendations & Picks
    ========================================================================== */
 
 .rec-filter-bar {
