@@ -9,6 +9,7 @@ const sortedRecommendations = [...recommendations].sort(
 const articleCount = recommendations.filter((r) => r.type === 'article').length;
 const bookCount = recommendations.filter((r) => r.type === 'book').length;
 const videoCount = recommendations.filter((r) => r.type === 'video').length;
+const courseCount = recommendations.filter((r) => r.type === 'course').length;
 
 const finishedCount = recommendations.filter((r) => r.status === 'finished').length;
 const inProgressCount = recommendations.filter((r) => r.status === 'in-progress').length;
@@ -34,7 +35,9 @@ const getButtonLabel = (type: string) => {
     case 'book':
       return 'Explore Book';
     case 'video':
-      return 'Watch Video / Course';
+      return 'Watch Video';
+    case 'course':
+      return 'Open Course';
     default:
       return 'Visit Resource';
   }
@@ -74,6 +77,12 @@ const getButtonLabel = (type: string) => {
           <span set:html={typeIcons.video} />
           #video ({videoCount})
         </button>
+        {courseCount > 0 && (
+          <button class="rec-filter-btn" data-group="type" data-filter="course">
+            <span set:html={typeIcons.course} />
+            #course ({courseCount})
+          </button>
+        )}
       </div>
 
       <!-- Status Filter -->
