@@ -5,7 +5,7 @@ date: 2026-08-31
 tags: ["testing", "java", "concurrency", "ci-cd", "clean-code", "debugging"]
 ---
 
-### How 3,700 AI credits, six false leads, and one unclosed mock taught me what "flaky" really means
+### How 4 Agents sesdions 5,000 AI credits, six false leads, and one unclosed mock taught me what "flaky" really means
 
 ---
 
