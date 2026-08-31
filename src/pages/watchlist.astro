@@ -2,171 +2,120 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Watchlist | Mohammad Yahia" description="Recommended reading and watchlist: past, ongoing, and next technical deep dives">
-  <section class="watchlist-shell">
-    <header class="watchlist-header">
-      <span class="eyebrow">Recommended Reading & Watchlist</span>
-      <h1>Technical Deep-Dive Dashboard</h1>
-      <p class="lead">A curated track of past and ongoing learning across distributed systems, identity security, and architecture strategy.</p>
-    </header>
-
-    <section class="watchlist-grid">
-      <div class="watchlist-column">
-        <h2>Currently Analyzing</h2>
-
-        <article class="watch-card">
-          <div class="watch-card-top">
-            <span class="watch-type">Book</span>
-          </div>
-          <h3>Designing Data-Intensive Applications: The Big Ideas Behind Reliable, Scalable, and Maintainable Systems</h3>
-          <p class="meta">Book by Martin Kleppmann</p>
-          <p>Deep-diving into database engine internals, partitioning mechanics, distributed replication, and stream processing primitives.</p>
-          <div class="watch-badges">
-            <span class="watch-badge">Distributed Systems</span>
-            <span class="watch-badge">Data Engines</span>
-            <span class="watch-badge">Storage Core</span>
-          </div>
-        </article>
-
-        <article class="watch-card">
-          <div class="watch-card-top">
-            <span class="watch-type">Course</span>
-          </div>
-          <h3>The Nuts and Bolts of OAuth 2.0</h3>
-          <p class="meta">Udemy Course by Aaron Parecki</p>
-          <p>Mastering secure enterprise authorization loops, tokens, scopes, security architecture validation, and zero-trust API protection.</p>
-          <p class="watch-link-row">
-            <a href="https://www.udemy.com/course/oauth-2-simplified/" target="_blank" rel="noreferrer">Course: https://www.udemy.com/course/oauth-2-simplified/</a>
-          </p>
-          <div class="watch-badges">
-            <span class="watch-badge">Identity Security</span>
-            <span class="watch-badge">OAuth 2.0 / OIDC</span>
-            <span class="watch-badge">API Security</span>
-          </div>
-        </article>
-      </div>
-
-      <div class="watchlist-column">
-        <h2>Up Next in the Queue</h2>
-
-        <article class="watch-card">
-          <div class="watch-card-top">
-            <span class="watch-type">Course</span>
-          </div>
-          <h3>Software Architecture Essentials: Masterclass</h3>
-          <p class="meta">Udemy Course</p>
-          <p>Analyzing architectural patterns, component isolation strategies, enterprise system patterns, and systemic scalability trade-offs.</p>
-          <p class="watch-link-row">
-            <a href="https://www.udemy.com/course/software-architecture-essentials/" target="_blank" rel="noreferrer">Course: https://www.udemy.com/course/software-architecture-essentials/</a>
-          </p>
-          <div class="watch-badges">
-            <span class="watch-badge">System Design</span>
-            <span class="watch-badge">Enterprise Architecture</span>
-            <span class="watch-badge">Scalability</span>
-          </div>
-        </article>
-      </div>
-    </section>
+<BaseLayout title="Technical Watchlist & Deep Dives | Mohammad Yahia" description="Curated reading track, research books, and courses across distributed systems, security, and architecture.">
+  <section class="section-heading" style="margin-bottom: 2.5rem;">
+    <span class="eyebrow">Continuous Learning</span>
+    <h1 class="hero-title" style="font-size: clamp(2rem, 3.5vw, 2.8rem);">
+      Technical Deep-Dive Dashboard
+    </h1>
+    <p class="lead" style="max-width: 50rem;">
+      A curated track of ongoing learning, research books, and architecture courses across distributed systems, enterprise security, and software design.
+    </p>
   </section>
+
+  <div class="watch-grid">
+    <!-- COLUMN 1: Currently Analyzing -->
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+      <div style="display: flex; align-items: center; gap: 0.6rem;">
+        <span class="status-dot"></span>
+        <h2 style="font-size: 1.3rem; margin: 0;">Currently Analyzing</h2>
+      </div>
+
+      <article class="watch-card">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span class="watch-type-tag">Book</span>
+          <span class="meta" style="font-size: 0.8rem;">Martin Kleppmann</span>
+        </div>
+
+        <h3 style="font-size: 1.2rem; margin: 0.5rem 0 0.25rem;">
+          Designing Data-Intensive Applications
+        </h3>
+        
+        <p class="meta" style="font-size: 0.88rem; margin-bottom: 0.5rem;">
+          The Big Ideas Behind Reliable, Scalable, and Maintainable Systems
+        </p>
+
+        <p style="color: var(--muted); font-size: 0.95rem; line-height: 1.6; margin: 0.5rem 0 1rem;">
+          Deep-diving into database engine internals, LSM-trees vs B-Trees, partitioning mechanics, distributed replication, consensus protocols (Raft/Paxos), and stream processing primitives.
+        </p>
+
+        <div class="article-tags">
+          <span class="tag-chip">Distributed Systems</span>
+          <span class="tag-chip">Storage Engines</span>
+          <span class="tag-chip">Stream Processing</span>
+        </div>
+      </article>
+
+      <article class="watch-card">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span class="watch-type-tag">Course</span>
+          <span class="meta" style="font-size: 0.8rem;">Aaron Parecki</span>
+        </div>
+
+        <h3 style="font-size: 1.2rem; margin: 0.5rem 0 0.25rem;">
+          The Nuts and Bolts of OAuth 2.0
+        </h3>
+        
+        <p class="meta" style="font-size: 0.88rem; margin-bottom: 0.5rem;">
+          Enterprise Authorization & Identity Flows
+        </p>
+
+        <p style="color: var(--muted); font-size: 0.95rem; line-height: 1.6; margin: 0.5rem 0 1rem;">
+          Mastering secure enterprise authorization loops, PKCE flows, JWT verification, scope hierarchies, security architecture validation, and zero-trust API protection.
+        </p>
+
+        <div style="margin-bottom: 1rem;">
+          <a href="https://www.udemy.com/course/oauth-2-simplified/" target="_blank" rel="noreferrer" class="section-link" style="font-size: 0.85rem;">
+            Course Link ↗
+          </a>
+        </div>
+
+        <div class="article-tags">
+          <span class="tag-chip">OAuth 2.0</span>
+          <span class="tag-chip">OIDC</span>
+          <span class="tag-chip">Zero-Trust</span>
+        </div>
+      </article>
+    </div>
+
+    <!-- COLUMN 2: Up Next in the Queue -->
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+      <div style="display: flex; align-items: center; gap: 0.6rem;">
+        <span style="width: 0.55rem; height: 0.55rem; border-radius: 999px; background: var(--muted);"></span>
+        <h2 style="font-size: 1.3rem; margin: 0;">Up Next in Queue</h2>
+      </div>
+
+      <article class="watch-card">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span class="watch-type-tag">Course</span>
+          <span class="meta" style="font-size: 0.8rem;">Enterprise Masterclass</span>
+        </div>
+
+        <h3 style="font-size: 1.2rem; margin: 0.5rem 0 0.25rem;">
+          Software Architecture Essentials: Masterclass
+        </h3>
+        
+        <p class="meta" style="font-size: 0.88rem; margin-bottom: 0.5rem;">
+          Advanced System Patterns & Isolation Strategies
+        </p>
+
+        <p style="color: var(--muted); font-size: 0.95rem; line-height: 1.6; margin: 0.5rem 0 1rem;">
+          Analyzing component isolation strategies, resilience engineering (circuit breakers, bulkheads), event sourcing, CQRS patterns, and systematic scalability trade-offs.
+        </p>
+
+        <div style="margin-bottom: 1rem;">
+          <a href="https://www.udemy.com/course/software-architecture-essentials/" target="_blank" rel="noreferrer" class="section-link" style="font-size: 0.85rem;">
+            Course Link ↗
+          </a>
+        </div>
+
+        <div class="article-tags">
+          <span class="tag-chip">System Design</span>
+          <span class="tag-chip">Enterprise Architecture</span>
+          <span class="tag-chip">Scalability</span>
+        </div>
+      </article>
+    </div>
+  </div>
 </BaseLayout>
-
-<style>
-  .watchlist-shell {
-    max-width: 72rem;
-    margin: 0 auto;
-    padding: 0 1rem;
-  }
-
-  .watchlist-header {
-    margin-bottom: 1.4rem;
-  }
-
-  .watchlist-header h1 {
-    margin-bottom: 0.6rem;
-  }
-
-  .watchlist-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  .watchlist-column {
-    display: grid;
-    gap: 1rem;
-    align-content: start;
-  }
-
-  .watchlist-column h2 {
-    margin: 0;
-    font-size: 1.1rem;
-  }
-
-  .watch-card {
-    background: color-mix(in srgb, var(--surface) 65%, #0f172a 35%);
-    border: 1px solid color-mix(in srgb, var(--border) 75%, #334155 25%);
-    border-radius: 20px;
-    padding: 1.2rem;
-    box-shadow: var(--shadow);
-  }
-
-  .watch-card-top {
-    display: flex;
-    justify-content: flex-start;
-    margin-bottom: 0.7rem;
-  }
-
-  .watch-type {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.22rem 0.6rem;
-    border-radius: 999px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-    color: var(--accent);
-    background: var(--accent-soft);
-    border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
-  }
-
-  .watch-card h3 {
-    margin: 0 0 0.45rem;
-    font-size: 1.05rem;
-    line-height: 1.35;
-  }
-
-  .watch-card p {
-    margin: 0 0 0.7rem;
-  }
-
-  .watch-link-row a {
-    font-size: 0.9rem;
-    word-break: break-word;
-  }
-
-  .watch-badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 0.2rem;
-  }
-
-  .watch-badge {
-    display: inline-block;
-    padding: 0.25rem 0.55rem;
-    border-radius: 999px;
-    font-size: 0.75rem;
-    color: var(--text);
-    border: 1px solid color-mix(in srgb, var(--border) 80%, #334155 20%);
-    background: color-mix(in srgb, var(--surface-strong) 72%, #0f172a 28%);
-  }
-
-  @media (min-width: 768px) {
-    .watchlist-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 2rem;
-    }
-  }
-</style>
 

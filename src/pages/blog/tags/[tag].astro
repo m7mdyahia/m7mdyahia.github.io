@@ -24,21 +24,38 @@ const { tag, posts } = Astro.props;
 const getPostSlug = (id: string) => id.replace(/\.md$/, '');
 ---
 
-<BaseLayout title={`#${tag} | Blog`} description={`Posts tagged with #${tag}`}>
-  <section class="card list">
-    <span class="eyebrow">Tag</span>
-    <h1>#{tag}</h1>
-    <p class="lead">{posts.length} post(s)</p>
+<BaseLayout title={`#${tag} | Blog Articles`} description={`Articles tagged with #${tag}`}>
+  <section class="section-heading" style="margin-bottom: 2.5rem;">
+    <div style="margin-bottom: 1rem;">
+      <a href="/blog/" class="section-link">
+        <span aria-hidden="true">←</span>
+        <span>Back to all articles</span>
+      </a>
+    </div>
+    <span class="eyebrow">Topic Tag</span>
+    <h1 class="hero-title" style="font-size: clamp(2rem, 3.5vw, 2.8rem);">
+      #{tag}
+    </h1>
+    <p class="lead">{posts.length} technical article(s) tagged with #{tag}.</p>
   </section>
 
-  <section class="list" style="margin-top: 1.2rem;">
+  <section class="grid-3">
     {
       posts.map((post) => (
-        <article class="card post-card">
-          <p class="meta">{post.data.date.toLocaleDateString('en-GB')}</p>
-          <h2><a href={`/blog/${getPostSlug(post.id)}/`}>{post.data.title}</a></h2>
-          <p>{post.data.description}</p>
-        </article>
+        <a class="article-card" href={`/blog/${getPostSlug(post.id)}/`}>
+          <div>
+            <div class="article-card-top">
+              <span class="article-date">{post.data.date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+              <span class="tag-chip">#{tag}</span>
+            </div>
+            <h3 class="article-title">{post.data.title}</h3>
+            <p class="article-desc">{post.data.description}</p>
+          </div>
+
+          <div class="article-footer">
+            <span class="article-cta">Read article →</span>
+          </div>
+        </a>
       ))
     }
   </section>

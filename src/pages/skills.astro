@@ -10,23 +10,31 @@ const tags = [...new Set([...blogs.flatMap((item) => item.data.tags), ...tips.fl
   .sort((a, b) => a.localeCompare(b));
 ---
 
-<BaseLayout title="Skills | Mohammad Yahia" description="Full skills and technologies matrix for Mohammad Yahia">
-  <section class="section-heading">
-    <span class="eyebrow">My Skills</span>
-    <h1>Full Skills & Technologies Matrix</h1>
-    <p class="lead">A complete view of architecture, platform, and delivery capabilities across backend, cloud, security, and AI-assisted engineering.</p>
+<BaseLayout title="Architectural Capabilities & Skills Matrix | Mohammad Yahia" description="Full skills, architectural capabilities, and technologies matrix for Mohammad Yahia.">
+  <section class="section-heading" style="margin-bottom: 2.5rem;">
+    <span class="eyebrow">Engineering Matrix</span>
+    <h1 class="hero-title" style="font-size: clamp(2rem, 3.5vw, 2.8rem);">
+      Architectural & Technical Capabilities
+    </h1>
+    <p class="lead" style="max-width: 52rem;">
+      A comprehensive map of architecture, platform reliability, streaming ecosystems, infrastructure-as-code, and high-performance computing capabilities.
+    </p>
   </section>
 
   <SkillsGrid skills={profile.skills} />
 
-  <section class="section-heading" style="margin-top: 2rem;">
-    <span class="eyebrow">Hashtags</span>
-    <h2>Topics I write about most often.</h2>
-  </section>
+  <section class="section-container" style="margin-top: 3.5rem;">
+    <div class="section-header-flex">
+      <div class="section-header-left">
+        <span class="eyebrow">Topic Taxonomy</span>
+        <h2 class="section-title">Explore Articles by Skill Area</h2>
+      </div>
+    </div>
 
-  <section class="card">
-    <div class="pills">
-      {tags.map((tag) => <a class="pill" href={`/tags/${tag}/`}>#{tag}</a>)}
+    <div class="card">
+      <div class="pills">
+        {tags.map((tag) => <a class="pill" href={`/tags/${tag}/`}>#{tag}</a>)}
+      </div>
     </div>
   </section>
 </BaseLayout>

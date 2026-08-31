@@ -22,40 +22,109 @@ const allPosts = (await getCollection('blog')).sort(
 );
 ---
 
-<BaseLayout title={`${post.data.title} | Blog`} description={post.data.description}>
-  <div class="blog-layout">
-    <main class="blog-main">
-      <article class="card prose">
-        <p class="meta">{post.data.date.toLocaleDateString('en-GB')}</p>
-        <h1>{post.data.title}</h1>
-        <p class="lead">{post.data.description}</p>
-        <div class="pills">
-          {post.data.tags.map((tag) => <a class="pill" href={`/blog/tags/${tag}/`}>#{tag}</a>)}
-        </div>
-        <div style="margin-top: 1.2rem;">
+<BaseLayout title={`${post.data.title} | Mohammad Yahia`} description={post.data.description}>
+  <div class="article-page-layout">
+    <main class="article-main">
+      <div style="margin-bottom: 1.5rem;">
+        <a href="/blog/" class="section-link">
+          <span aria-hidden="true">←</span>
+          <span>Back to all articles</span>
+        </a>
+      </div>
+
+      <article class="card article-detail-card">
+        <header class="article-header">
+          <div class="article-meta-row">
+            <span class="badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              {post.data.date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+            </span>
+            <span class="meta">By Mohammad Yahia</span>
+          </div>
+
+          <h1 class="article-main-title">{post.data.title}</h1>
+          <p class="article-main-lead">{post.data.description}</p>
+
+          <div class="pills" style="margin-top: 1rem;">
+            {post.data.tags.map((tag) => <a class="pill" href={`/blog/tags/${tag}/`}>#{tag}</a>)}
+          </div>
+        </header>
+
+        <hr style="border: 0; border-top: 1px solid var(--border); margin: 2rem 0;" />
+
+        <div class="prose">
           <Content />
         </div>
       </article>
     </main>
 
-    <BlogSidebar posts={allPosts} currentPostId={post.id} type="blog" />
+    <div class="article-sidebar-col">
+      <BlogSidebar posts={allPosts} currentPostId={post.id} type="blog" />
+    </div>
   </div>
 </BaseLayout>
 
 <style>
-  .blog-layout {
+  .article-page-layout {
     display: grid;
-    grid-template-columns: 1fr 300px;
+    grid-template-columns: 1fr 320px;
     gap: 2.5rem;
+    align-items: start;
   }
 
-  .blog-main {
+  .article-main {
     min-width: 0;
   }
 
-  @media (max-width: 1040px) {
-    .blog-layout {
+  .article-detail-card {
+    padding: 3rem;
+  }
+
+  .article-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .article-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .article-main-title {
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 0.5rem 0 0;
+    letter-spacing: -0.03em;
+  }
+
+  .article-main-lead {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .article-sidebar-col {
+    position: sticky;
+    top: 5.5rem;
+  }
+
+  @media (max-width: 1080px) {
+    .article-page-layout {
       grid-template-columns: 1fr;
+    }
+
+    .article-detail-card {
+      padding: 2rem 1.5rem;
+    }
+
+    .article-sidebar-col {
+      position: static;
+      margin-top: 2rem;
     }
   }
 </style>

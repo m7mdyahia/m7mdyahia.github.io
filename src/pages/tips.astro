@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import BlogSidebar from '../components/BlogSidebar.astro';
 import { getCollection } from 'astro:content';
 
 const tips = (await getCollection('tips')).sort(
@@ -9,50 +8,50 @@ const tips = (await getCollection('tips')).sort(
 const getTipSlug = (id: string) => id.replace(/\.md$/, '');
 ---
 
-<BaseLayout title="Tips | Mohammad Yahia" description="Short engineering tips by Mohammad Yahia">
-  <div class="tips-layout">
-    <main class="tips-main">
-      <section class="card list">
-        <span class="eyebrow">Tips</span>
-        <h1>Practical Engineering Tips</h1>
-        <p class="lead">Small ideas and rules of thumb that help keep systems more reliable, maintainable, and easier to operate.</p>
-      </section>
+<BaseLayout title="Practical Engineering Tips | Mohammad Yahia" description="Short, actionable engineering tips and system recipes by Mohammad Yahia.">
+  <section class="section-heading" style="margin-bottom: 2rem;">
+    <span class="eyebrow">Snippets & Recipes</span>
+    <h1 class="hero-title" style="font-size: clamp(2rem, 3.5vw, 2.8rem);">
+      Practical Engineering Tips
+    </h1>
+    <p class="lead" style="max-width: 48rem;">
+      Quick rules of thumb, terminal automation scripts, CSS techniques, and regex utilities that streamline day-to-day development.
+    </p>
+  </section>
 
-      <section class="skills-grid" style="margin-top: 1.2rem;">
-        {
-          tips.map((tip) => (
-            <article class="card skill-card">
-              <p class="meta">{tip.data.date.toLocaleDateString('en-GB')}</p>
-              <h3><a href={`/tips/${getTipSlug(tip.id)}/`}>{tip.data.title}</a></h3>
-              <p>{tip.data.description}</p>
-              <div class="pills">
-                {tip.data.tags.map((tag) => <span class="pill">#{tag}</span>)}
+  <section class="grid-2">
+    {
+      tips.map((tip) => (
+        <article class="card tip-card" style="padding: 2rem;">
+          <div>
+            <div class="tip-card-header">
+              <div class="article-tags">
+                {tip.data.tags.map((tag) => (
+                  <span class="tag-chip">#{tag}</span>
+                ))}
               </div>
-            </article>
-          ))
-        }
-      </section>
-    </main>
+              <span class="meta" style="font-size: 0.8rem;">
+                {tip.data.date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+              </span>
+            </div>
+            
+            <h2 class="tip-title" style="font-size: 1.3rem; margin-top: 0.75rem;">
+              <a href={`/tips/${getTipSlug(tip.id)}/`}>{tip.data.title}</a>
+            </h2>
+            
+            <p class="tip-desc" style="font-size: 0.98rem; margin: 0.75rem 0 1.25rem;">
+              {tip.data.description}
+            </p>
+          </div>
 
-    <BlogSidebar posts={tips} type="tips" />
-  </div>
-</BaseLayout>
-
-<style>
-  .tips-layout {
-    display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 2.5rem;
-  }
-
-  .tips-main {
-    min-width: 0;
-  }
-
-  @media (max-width: 1040px) {
-    .tips-layout {
-      grid-template-columns: 1fr;
+          <div class="article-footer" style="padding-top: 1rem;">
+            <a href={`/tips/${getTipSlug(tip.id)}/`} class="button secondary" style="font-size: 0.85rem; padding: 0.45rem 1rem;">
+              View Code & Solution →
+            </a>
+          </div>
+        </article>
+      ))
     }
-  }
-</style>
+  </section>
+</BaseLayout>
 

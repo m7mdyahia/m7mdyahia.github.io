@@ -13,11 +13,11 @@ const getHref = (id: string) => `/${type}/${getSlug(id)}/`;
 
 <aside class="sidebar">
   <div class="sidebar-header">
-    <h3>Recent Posts</h3>
+    <span class="sidebar-badge">{type === 'blog' ? 'Recent Articles' : 'Recent Tips'}</span>
   </div>
   <nav class="sidebar-nav">
     {
-      posts.slice(0, 10).map((item) => (
+      posts.slice(0, 8).map((item) => (
         <a
           href={getHref(item.id)}
           class:list={{
@@ -37,62 +37,70 @@ const getHref = (id: string) => `/${type}/${getSlug(id)}/`;
 <style>
   .sidebar {
     background: var(--surface);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 1.6rem;
+    border-radius: 20px;
+    padding: 1.4rem;
     position: sticky;
     top: 5.5rem;
     height: fit-content;
+    box-shadow: var(--shadow);
   }
 
   .sidebar-header {
-    margin-bottom: 1.2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-subtle);
   }
 
-  .sidebar-header h3 {
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text);
+  .sidebar-badge {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--accent);
   }
 
   .sidebar-nav {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.35rem;
   }
 
   .sidebar-link {
     display: block;
-    padding: 0.8rem 1rem;
-    border-radius: 12px;
+    padding: 0.65rem 0.85rem;
+    border-radius: 10px;
     text-decoration: none;
-    color: var(--text);
-    transition: background-color 0.2s ease, color 0.2s ease;
-    border-left: 3px solid transparent;
+    color: var(--text-secondary);
+    transition: all 0.15s ease;
+    border-left: 2px solid transparent;
   }
 
   .sidebar-link:hover {
     background-color: var(--accent-soft);
     color: var(--accent);
+    transform: translateX(2px);
   }
 
   .sidebar-link.active {
     background-color: var(--accent-soft);
     color: var(--accent);
     border-left-color: var(--accent);
+    font-weight: 600;
   }
 
   .sidebar-link-date {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--muted);
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.2rem;
   }
 
   .sidebar-link-title {
-    font-size: 0.9rem;
+    font-size: 0.86rem;
     font-weight: 500;
-    line-height: 1.3;
+    line-height: 1.35;
     word-break: break-word;
   }
 </style>

@@ -4,24 +4,37 @@ import { profile } from '../data/profile';
 import CvContent from '../content/cv/mohammad-yahia.md';
 ---
 
-<BaseLayout title={`${profile.name} | CV`} description={`Curriculum vitae for ${profile.name}`}>
-  <section class="card cv-hero">
-    <div class="cv-hero-copy">
-      <span class="eyebrow">Resume</span>
-      <h1>{profile.name}</h1>
-      <p class="lead">{profile.role}</p>
-      <p class="meta">{profile.location} · {profile.email} · {profile.phone}</p>
+<BaseLayout title={`${profile.name} | Curriculum Vitae & Experience`} description={`Curriculum vitae, architecture experience, and background for ${profile.name}`}>
+  <section class="card cv-hero" style="padding: 2.5rem;">
+    <div>
+      <span class="eyebrow">Curriculum Vitae</span>
+      <h1 class="hero-title" style="font-size: clamp(2rem, 3.5vw, 2.8rem); margin-top: 0.5rem;">
+        {profile.name}
+      </h1>
+      <p class="hero-role" style="font-size: 1.15rem; margin-bottom: 0.5rem;">{profile.role} · Siemens</p>
+      <p class="meta">{profile.location} · {profile.email}</p>
     </div>
 
-    <div class="cv-actions-panel">
-      <a class="button primary" href={profile.cvPath} target="_blank" rel="noreferrer">Open PDF</a>
-      <a class="button" href={profile.cvPath} download>Download PDF</a>
-      <a class="button" href={`mailto:${profile.email}`}>Contact me</a>
+    <div class="cv-actions">
+      <a class="button primary" href={profile.cvPath} target="_blank" rel="noreferrer">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Open PDF
+      </a>
+      <a class="button secondary" href={profile.cvPath} download>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download PDF
+      </a>
+      <a class="button" href={`mailto:${profile.email}`}>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Contact
+      </a>
     </div>
   </section>
 
-  <section class="card prose cv-prose">
-    <CvContent />
+  <section class="card cv-prose" style="margin-top: 2rem; padding: 3rem;">
+    <div class="prose">
+      <CvContent />
+    </div>
   </section>
 </BaseLayout>
 

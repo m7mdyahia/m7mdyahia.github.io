@@ -1,18 +1,26 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { recommendations, type Recommendation } from '../../data/recommendations';
 
 export async function getStaticPaths() {
   const blogs = await getCollection('blog');
   const tips = await getCollection('tips');
-  const tags = [...new Set([...blogs.flatMap((post) => post.data.tags), ...tips.flatMap((tip) => tip.data.tags)])];
+  const tags = [
+    ...new Set([
+      ...blogs.flatMap((post) => post.data.tags),
+      ...tips.flatMap((tip) => tip.data.tags),
+      ...recommendations.flatMap((rec) => rec.tags)
+    ])
+  ];
 
   return tags.map((tag) => ({
     params: { tag },
     props: {
       tag,
       blogs: blogs.filter((post) => post.data.tags.includes(tag)),
-      tips: tips.filter((tip) => tip.data.tags.includes(tag))
+      tips: tips.filter((tip) => tip.data.tags.includes(tag)),
+      recs: recommendations.filter((rec) => rec.tags.includes(tag))
     }
   }));
 }
@@ -21,47 +29,151 @@ type Props = {
   tag: string;
   blogs: CollectionEntry<'blog'>[];
   tips: CollectionEntry<'tips'>[];
+  recs: Recommendation[];
 };
 
-const { tag, blogs, tips } = Astro.props;
+const { tag, blogs, tips, recs = [] } = Astro.props;
 const blogSlug = (id: string) => id.replace(/\.md$/, '');
 const tipSlug = (id: string) => id.replace(/\.md$/, '');
 ---
 
-<BaseLayout title={`#${tag} | Tags`} description={`Content tagged with #${tag}`}>
-  <section class="card list">
-    <span class="eyebrow">Tag</span>
-    <h1>#{tag}</h1>
-    <p class="lead">{blogs.length + tips.length} item(s) across blog and tips.</p>
+<BaseLayout title={`#${tag} | Topics & Publications`} description={`Articles, engineering tips, and curated picks tagged with #${tag}`}>
+  <section class="section-heading" style="margin-bottom: 2.5rem;">
+    <div style="margin-bottom: 1rem;">
+      <a href="/" class="section-link">
+        <span aria-hidden="true">←</span>
+        <span>Back to Home</span>
+      </a>
+    </div>
+    <span class="eyebrow">Topic Tag</span>
+    <h1 class="hero-title" style="font-size: clamp(2rem, 3.5vw, 2.8rem);">
+      #{tag}
+    </h1>
+    <p class="lead">
+      {blogs.length + tips.length + recs.length} publication(s), engineering notes, and curated picks tagged with #{tag}.
+    </p>
   </section>
 
   {blogs.length > 0 && (
-    <section class="list" style="margin-top: 1.2rem;">
-      <h2>Blog</h2>
-      {
-        blogs.map((post) => (
-          <article class="card post-card">
-            <p class="meta">{post.data.date.toLocaleDateString('en-GB')}</p>
-            <h3><a href={`/blog/${blogSlug(post.id)}/`}>{post.data.title}</a></h3>
-            <p>{post.data.description}</p>
-          </article>
-        ))
-      }
+    <section class="section-container">
+      <div class="section-header-flex">
+        <h2 class="section-title">Articles ({blogs.length})</h2>
+      </div>
+
+      <div class="grid-3">
+        {
+          blogs.map((post) => (
+            <a class="article-card" href={`/blog/${blogSlug(post.id)}/`}>
+              <div>
+                <div class="article-card-top">
+                  <span class="article-date">{post.data.date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                  <span class="tag-chip">#{tag}</span>
+                </div>
+                <h3 class="article-title">{post.data.title}</h3>
+                <p class="article-desc">{post.data.description}</p>
+              </div>
+
+              <div class="article-footer">
+                <span class="article-cta">Read article →</span>
+              </div>
+            </a>
+          ))
+        }
+      </div>
     </section>
   )}
 
   {tips.length > 0 && (
-    <section class="list" style="margin-top: 1.2rem;">
-      <h2>Tips</h2>
-      {
-        tips.map((tip) => (
-          <article class="card post-card">
-            <p class="meta">{tip.data.date.toLocaleDateString('en-GB')}</p>
-            <h3><a href={`/tips/${tipSlug(tip.id)}/`}>{tip.data.title}</a></h3>
-            <p>{tip.data.description}</p>
-          </article>
-        ))
-      }
+    <section class="section-container">
+      <div class="section-header-flex">
+        <h2 class="section-title">Tips & Snippets ({tips.length})</h2>
+      </div>
+
+      <div class="grid-2">
+        {
+          tips.map((tip) => (
+            <article class="card tip-card" style="padding: 1.75rem;">
+              <div>
+                <div class="tip-card-header">
+                  <span class="tag-chip">#{tag}</span>
+                  <span class="meta" style="font-size: 0.8rem;">{tip.data.date.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })}</span>
+                </div>
+                <h3 class="tip-title" style="font-size: 1.2rem; margin-top: 0.5rem;">
+                  <a href={`/tips/${tipSlug(tip.id)}/`}>{tip.data.title}</a>
+                </h3>
+                <p class="tip-desc">{tip.data.description}</p>
+              </div>
+
+              <div class="article-footer" style="padding-top: 0.75rem;">
+                <a href={`/tips/${tipSlug(tip.id)}/`} class="section-link" style="font-size: 0.85rem;">
+                  Open tip →
+                </a>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+  )}
+
+  {recs.length > 0 && (
+    <section class="section-container">
+      <div class="section-header-flex">
+        <h2 class="section-title">Curated Picks ({recs.length})</h2>
+      </div>
+
+      <div class="grid-2">
+        {
+          recs.map((rec) => (
+            <article class="recommendation-card" style="padding: 1.75rem;">
+              <div class="rec-card-main">
+                <div class="rec-card-header">
+                  <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                    <span class:list={['rec-type-badge', `rec-type-${rec.type}`]}>
+                      #{rec.type}
+                    </span>
+                    <span class:list={['status-pill', `status-pill-${rec.status}`]}>
+                      <span class="status-pill-dot"></span>
+                      <span>{rec.status === 'finished' ? 'Finished' : rec.status === 'in-progress' ? 'In Progress' : 'To Do'}</span>
+                    </span>
+                    <span class="rec-author">by <strong>{rec.author}</strong></span>
+                  </div>
+                </div>
+
+                <h3 class="rec-title" style="font-size: 1.25rem; margin-top: 0.6rem;">
+                  <a href={rec.url} target="_blank" rel="noreferrer">
+                    {rec.title}
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline-block; vertical-align: middle; margin-left: 0.25rem;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                  </a>
+                </h3>
+
+                {rec.subtitle && <p class="rec-subtitle">{rec.subtitle}</p>}
+                <p class="rec-summary">{rec.summary}</p>
+              </div>
+
+              <div class="rec-card-footer" style="padding-top: 1rem; margin-top: 1rem; border-top: 1px solid var(--border-subtle);">
+                <div class="article-tags">
+                  {rec.tags.map((t) => (
+                    <a href={`/tags/${t}/`} class="tag-chip">
+                      #{t}
+                    </a>
+                  ))}
+                </div>
+                <a
+                  href={rec.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  class="button secondary rec-action-btn"
+                  style="font-size: 0.82rem; padding: 0.35rem 0.85rem;"
+                >
+                  <span>Visit Link</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          ))
+        }
+      </div>
     </section>
   )}
 </BaseLayout>

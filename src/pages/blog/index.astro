@@ -1,58 +1,127 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import BlogSidebar from '../../components/BlogSidebar.astro';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime()
 );
+
+const featuredPost = posts[0];
+const remainingPosts = posts.slice(1);
+
+const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort((a, b) => a.localeCompare(b));
 const getPostSlug = (id: string) => id.replace(/\.md$/, '');
 ---
 
-<BaseLayout title="Blog | Mohammad Yahia" description="Articles and notes by Mohammad Yahia">
-  <div class="blog-layout">
-    <main class="blog-main">
-      <section class="card list">
-        <span class="eyebrow">Blog</span>
-        <h1>Articles</h1>
-        <p class="lead">Articles and notes  about architecture, backend engineering, and reliable delivery.</p>
-      </section>
+<BaseLayout title="Blog & Technical Insights | Mohammad Yahia" description="Articles and notes on distributed systems, enterprise Java, cloud architecture, and engineering velocity.">
+  <!-- BLOG HEADER -->
+  <section class="section-heading" style="margin-bottom: 2rem;">
+    <span class="eyebrow">Engineering Insights</span>
+    <h1 class="hero-title" style="font-size: clamp(2rem, 3.5vw, 2.8rem);">
+      Articles & Architectural Notes
+    </h1>
+    <p class="lead" style="max-width: 50rem;">
+      Deep-dives into backend architecture, real-time messaging, enterprise Java, cloud systems, and thoughts on AI and software engineering.
+    </p>
 
-      <section class="list" style="margin-top: 1.2rem;">
-        {
-          posts.map((post) => (
-            <article class="card post-card">
-              <p class="meta">{post.data.date.toLocaleDateString('en-GB')}</p>
-              <h2><a href={`/blog/${getPostSlug(post.id)}/`}>{post.data.title}</a></h2>
-              <p>{post.data.description}</p>
-              <div class="pills">
-                {post.data.tags.map((tag) => <a class="pill" href={`/blog/tags/${tag}/`}>#{tag}</a>)}
+    <!-- Tag filter pills -->
+    <div class="pills" style="margin-top: 1.5rem;">
+      <span style="font-size: 0.85rem; font-weight: 600; color: var(--muted); align-self: center; margin-right: 0.3rem;">Filter Topics:</span>
+      {
+        allTags.map((tag) => (
+          <a class="pill" href={`/blog/tags/${tag}/`}>
+            #{tag}
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- FEATURED POST SPOTLIGHT -->
+  {
+    featuredPost && (
+      <article class="featured-post-banner">
+        <div class="featured-post-content">
+          <div class="featured-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>Latest Article</span>
+          </div>
+          
+          <h2 class="featured-post-title">
+            <a href={`/blog/${getPostSlug(featuredPost.id)}/`}>
+              {featuredPost.data.title}
+            </a>
+          </h2>
+          
+          <p class="featured-post-desc">{featuredPost.data.description}</p>
+          
+          <div class="article-footer" style="border: none; padding-top: 0.5rem;">
+            <div class="article-tags">
+              {featuredPost.data.tags.map((tag) => (
+                <a class="tag-chip" href={`/blog/tags/${tag}/`}>#{tag}</a>
+              ))}
+            </div>
+            <span class="meta" style="font-size: 0.85rem;">
+              {featuredPost.data.date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+            </span>
+          </div>
+
+          <div style="margin-top: 0.5rem;">
+            <a class="button primary" href={`/blog/${getPostSlug(featuredPost.id)}/`}>
+              Read Full Article →
+            </a>
+          </div>
+        </div>
+
+        <div class="featured-visual-box">
+          <div class="featured-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+          </div>
+          <div style="font-weight: 700; font-size: 1.1rem; color: var(--text);">Architectural Deep Dive</div>
+          <div style="font-size: 0.85rem; color: var(--muted); margin-top: 0.25rem;">{featuredPost.data.tags.join(' · ')}</div>
+        </div>
+      </article>
+    )
+  }
+
+  <!-- ALL REMAINING POSTS GRID -->
+  <section class="section-container">
+    <div class="section-header-flex">
+      <div>
+        <h2 class="section-title">All Publications ({posts.length})</h2>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      {
+        remainingPosts.map((post) => (
+          <a class="article-card" href={`/blog/${getPostSlug(post.id)}/`}>
+            <div>
+              <div class="article-card-top">
+                <span class="article-date">
+                  {post.data.date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                </span>
+                <span class="article-read-time">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                  <span>Article</span>
+                </span>
               </div>
-            </article>
-          ))
-        }
-      </section>
-    </main>
+              <h3 class="article-title">{post.data.title}</h3>
+              <p class="article-desc">{post.data.description}</p>
+            </div>
 
-    <BlogSidebar posts={posts} type="blog" />
-  </div>
+            <div class="article-footer">
+              <div class="article-tags">
+                {post.data.tags.slice(0, 2).map((tag) => (
+                  <span class="tag-chip">#{tag}</span>
+                ))}
+              </div>
+              <span class="article-cta">Read →</span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
 </BaseLayout>
-
-<style>
-  .blog-layout {
-    display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 2.5rem;
-  }
-
-  .blog-main {
-    min-width: 0;
-  }
-
-  @media (max-width: 1040px) {
-    .blog-layout {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>
 

@@ -22,40 +22,109 @@ const allTips = (await getCollection('tips')).sort(
 );
 ---
 
-<BaseLayout title={`${tip.data.title} | Tips`} description={tip.data.description}>
-  <div class="tips-layout">
-    <main class="tips-main">
-      <article class="card prose">
-        <p class="meta">{tip.data.date.toLocaleDateString('en-GB')}</p>
-        <h1>{tip.data.title}</h1>
-        <p class="lead">{tip.data.description}</p>
-        <div class="pills">
-          {tip.data.tags.map((tag) => <span class="pill">#{tag}</span>)}
-        </div>
-        <div style="margin-top: 1.2rem;">
+<BaseLayout title={`${tip.data.title} | Engineering Tips`} description={tip.data.description}>
+  <div class="article-page-layout">
+    <main class="article-main">
+      <div style="margin-bottom: 1.5rem;">
+        <a href="/tips/" class="section-link">
+          <span aria-hidden="true">←</span>
+          <span>Back to all tips</span>
+        </a>
+      </div>
+
+      <article class="card article-detail-card">
+        <header class="article-header">
+          <div class="article-meta-row">
+            <span class="badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+              {tip.data.date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+            </span>
+            <span class="meta">Practical Recipe</span>
+          </div>
+
+          <h1 class="article-main-title">{tip.data.title}</h1>
+          <p class="article-main-lead">{tip.data.description}</p>
+
+          <div class="pills" style="margin-top: 1rem;">
+            {tip.data.tags.map((tag) => <span class="pill">#{tag}</span>)}
+          </div>
+        </header>
+
+        <hr style="border: 0; border-top: 1px solid var(--border); margin: 2rem 0;" />
+
+        <div class="prose">
           <Content />
         </div>
       </article>
     </main>
 
-    <BlogSidebar posts={allTips} currentPostId={tip.id} type="tips" />
+    <div class="article-sidebar-col">
+      <BlogSidebar posts={allTips} currentPostId={tip.id} type="tips" />
+    </div>
   </div>
 </BaseLayout>
 
 <style>
-  .tips-layout {
+  .article-page-layout {
     display: grid;
-    grid-template-columns: 1fr 300px;
+    grid-template-columns: 1fr 320px;
     gap: 2.5rem;
+    align-items: start;
   }
 
-  .tips-main {
+  .article-main {
     min-width: 0;
   }
 
-  @media (max-width: 1040px) {
-    .tips-layout {
+  .article-detail-card {
+    padding: 3rem;
+  }
+
+  .article-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .article-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .article-main-title {
+    font-size: clamp(2rem, 3.5vw, 2.6rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 0.5rem 0 0;
+    letter-spacing: -0.03em;
+  }
+
+  .article-main-lead {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .article-sidebar-col {
+    position: sticky;
+    top: 5.5rem;
+  }
+
+  @media (max-width: 1080px) {
+    .article-page-layout {
       grid-template-columns: 1fr;
+    }
+
+    .article-detail-card {
+      padding: 2rem 1.5rem;
+    }
+
+    .article-sidebar-col {
+      position: static;
+      margin-top: 2rem;
     }
   }
 </style>

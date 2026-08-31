@@ -2,13 +2,34 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SkillsGrid from '../components/SkillsGrid.astro';
 import { profile } from '../data/profile';
+import { recommendations } from '../data/recommendations';
 import { getCollection } from 'astro:content';
+
 const photoPath = '/mohammad-yahia.jpg';
 const previewSkills = profile.skills.slice(0, 4);
-const blogs = await getCollection('blog');
-const tips = await getCollection('tips');
-const tags = [...new Set([...blogs.flatMap((item) => item.data.tags), ...tips.flatMap((item) => item.data.tags)])]
-  .sort((a, b) => a.localeCompare(b));
+
+const allBlogs = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+const recentBlogs = allBlogs.slice(0, 3);
+
+const allTips = (await getCollection('tips')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+const recentTips = allTips.slice(0, 4);
+
+const featuredRecommendations = recommendations.slice(0, 2);
+
+const tags = [
+  ...new Set([
+    ...allBlogs.flatMap((item) => item.data.tags),
+    ...allTips.flatMap((item) => item.data.tags),
+    ...recommendations.flatMap((item) => item.tags)
+  ])
+].sort((a, b) => a.localeCompare(b));
+
+const getPostSlug = (id: string) => id.replace(/\.md$/, '');
+const getTipSlug = (id: string) => id.replace(/\.md$/, '');
 
 const icons = {
   linkedin: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38zm-1.69-5.53A1.97 1.97 0 1 0 5.3 6.9a1.97 1.97 0 0 0-.05-3.93M20.45 20h-3.37v-5.58c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.44-2.14 2.93V20H9.72V8.5h3.24v1.57H13c.45-.86 1.56-1.77 3.22-1.77 3.45 0 4.08 2.27 4.08 5.22z"></path></svg>`,
@@ -17,51 +38,260 @@ const icons = {
 };
 ---
 
-<BaseLayout title={`${profile.name} | Home`} description={`${profile.name} personal website and blog`}>
-  <section class="hero hero-home">
-    <div class="card hero-copy">
-      <h1>{profile.name}</h1>
-      <p class="lead">{profile.role}</p>
-      <p>{profile.summary}</p>
-      <p class="meta">{profile.location} · {profile.email} · {profile.phone}</p>
+<BaseLayout title={`${profile.name} | Senior Software Engineer & Architect`} description={`${profile.name} - Personal website, engineering blog, and architectural insights.`}>
+  <!-- HERO SECTION -->
+  <section class="hero-section">
+    <div class="card hero-main-card">
+      <div>
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          <span>Senior Software Engineer & Acting Architect</span>
+        </div>
 
-      <p class="mt-4 border-l-2 border-slate-700 pl-3 text-xs text-slate-400 dark:text-slate-500">
-        A Note on Name Syntax: Across different systems, official documents, and corporate registries, my name may be spelled as <b>Mohammad</b> or <b>Mohamed</b>, and <b>Yehia</b> or <b>Yahia</b>. They all refer to the same person. Digitally, you can find me everywhere as <b>m7mdyahia</b>.
-      </p>
+        <h1 class="hero-title">
+          Building <span class="highlight">resilient systems</span> that scale under load.
+        </h1>
 
-      <div class="hero-links">
-        {
-          profile.socialLinks.map((link) => (
-            <a class="social-link" href={link.href} target={link.href.startsWith('http') ? '_blank' : undefined} rel={link.href.startsWith('http') ? 'noreferrer' : undefined} aria-label={link.label} title={link.label} set:html={icons[link.icon as keyof typeof icons]} />
-          ))
-        }
+        <div class="hero-role">{profile.role} · Siemens</div>
+
+        <p class="hero-summary">
+          {profile.summary}
+        </p>
+
+        <!-- Highlights grid -->
+        <div class="hero-highlights">
+          <div class="highlight-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            <span>10+ Years Enterprise Experience</span>
+          </div>
+          <div class="highlight-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+            <span>Distributed Messaging & Kafka</span>
+          </div>
+          <div class="highlight-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>
+            <span>AWS & Terraform IaC</span>
+          </div>
+          <div class="highlight-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <span>API Governance & Zero-Trust</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-actions">
+        <a class="button primary" href="/blog/">
+          Read Articles
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a class="button secondary" href={profile.cvPath} target="_blank" rel="noreferrer">
+          Resume (PDF)
+        </a>
+        
+        <div class="social-links-row">
+          {
+            profile.socialLinks.map((link) => (
+              <a class="social-btn" href={link.href} target={link.href.startsWith('http') ? '_blank' : undefined} rel={link.href.startsWith('http') ? 'noreferrer' : undefined} aria-label={link.label} title={link.label} set:html={icons[link.icon as keyof typeof icons]} />
+            ))
+          }
+        </div>
       </div>
     </div>
 
-    <div class="card hero-photo-card">
-      <img src={photoPath} alt="Mohammad Yahia" class="profile-photo" />
+    <!-- Photo and Identity Panel -->
+    <div class="hero-photo-panel">
+      <div class="hero-photo-wrapper">
+        <img src={photoPath} alt="Mohammad Yahia" />
+      </div>
+
+      <div class="name-syntax-box">
+        <strong>Note on Name Syntax:</strong> In corporate registries and publications, my name may appear as <strong>Mohammad</strong> / <strong>Mohamed</strong> or <strong>Yahia</strong> / <strong>Yehia</strong>. Online, find me everywhere as <strong>@m7mdyahia</strong>.
+      </div>
     </div>
   </section>
 
-  <section class="section-heading">
-    <span class="eyebrow">My Skills</span>
-    <h2>A focused preview of my core architecture and delivery strengths.</h2>
+  <!-- LATEST ARTICLES (FRONT & CENTER) -->
+  <section class="section-container">
+    <div class="section-header-flex">
+      <div class="section-header-left">
+        <span class="eyebrow">Technical Articles</span>
+        <h2 class="section-title">Latest Architecture & Engineering Deep Dives</h2>
+        <p class="section-subtitle">Practical insights on distributed systems, enterprise Java, performance, and engineering velocity.</p>
+      </div>
+      <a class="section-link" href="/blog/">
+        <span>View all {allBlogs.length} articles</span>
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <div class="grid-3">
+      {
+        recentBlogs.map((post) => (
+          <a class="article-card" href={`/blog/${getPostSlug(post.id)}/`}>
+            <div>
+              <div class="article-card-top">
+                <span class="article-date">{post.data.date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                <span class="article-read-time">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                  <span>Read</span>
+                </span>
+              </div>
+              <h3 class="article-title">{post.data.title}</h3>
+              <p class="article-desc">{post.data.description}</p>
+            </div>
+
+            <div class="article-footer">
+              <div class="article-tags">
+                {post.data.tags.slice(0, 2).map((tag) => (
+                  <span class="tag-chip">#{tag}</span>
+                ))}
+              </div>
+              <span class="article-cta">Read →</span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
   </section>
 
-  <SkillsGrid skills={previewSkills} />
+  <!-- PRACTICAL ENGINEERING TIPS -->
+  <section class="section-container">
+    <div class="section-header-flex">
+      <div class="section-header-left">
+        <span class="eyebrow">Tips & Snippets</span>
+        <h2 class="section-title">Practical Engineering Rules of Thumb</h2>
+        <p class="section-subtitle">Quick, actionable recipes for operations, script automation, and performance tuning.</p>
+      </div>
+      <a class="section-link" href="/tips/">
+        <span>View all {allTips.length} tips</span>
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
 
-  <section class="skills-cta-row">
-    <a class="button" href="/skills/">View Full Skills & Technologies Matrix <span aria-hidden="true">→</span></a>
+    <div class="grid-4">
+      {
+        recentTips.map((tip) => (
+          <article class="tip-card">
+            <div>
+              <div class="tip-card-header">
+                <span class="tip-tag-badge">#{tip.data.tags[0] ?? 'Tip'}</span>
+                <span class="meta" style="font-size: 0.75rem;">{tip.data.date.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })}</span>
+              </div>
+              <h3 class="tip-title">
+                <a href={`/tips/${getTipSlug(tip.id)}/`}>{tip.data.title}</a>
+              </h3>
+              <p class="tip-desc">{tip.data.description}</p>
+            </div>
+            <div style="margin-top: 1rem;">
+              <a href={`/tips/${getTipSlug(tip.id)}/`} class="section-link" style="font-size: 0.82rem;">
+                Open tip →
+              </a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
   </section>
 
-  <section class="section-heading" style="margin-top: 1.8rem;">
-    <span class="eyebrow">Hashtags</span>
-    <h2>Topics I write about most often.</h2>
+  <!-- CURATED PICKS -->
+  <section class="section-container">
+    <div class="section-header-flex">
+      <div class="section-header-left">
+        <span class="eyebrow">Handpicked</span>
+        <h2 class="section-title">Curated Picks & Deep Dives</h2>
+        <p class="section-subtitle">Exceptional reads, foundational books, and videos on software engineering and AI.</p>
+      </div>
+      <a class="section-link" href="/curated-picks/">
+        <span>View all {recommendations.length} picks</span>
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <div class="grid-2">
+      {
+        featuredRecommendations.map((rec) => (
+          <article class="recommendation-card" style="padding: 1.75rem;">
+            <div class="rec-card-main">
+              <div class="rec-card-header">
+                <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                  <span class:list={['rec-type-badge', `rec-type-${rec.type}`]}>
+                    #{rec.type}
+                  </span>
+                  <span class:list={['status-pill', `status-pill-${rec.status}`]}>
+                    <span class="status-pill-dot"></span>
+                    <span>{rec.status === 'finished' ? 'Finished' : rec.status === 'in-progress' ? 'In Progress' : 'To Do'}</span>
+                  </span>
+                  <span class="rec-author">by <strong>{rec.author}</strong></span>
+                </div>
+                <span class="rec-date">
+                  {new Date(rec.date).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })}
+                </span>
+              </div>
+
+              <h3 class="rec-title" style="font-size: 1.25rem; margin-top: 0.6rem;">
+                <a href={rec.url} target="_blank" rel="noreferrer">
+                  {rec.title}
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline-block; vertical-align: middle; margin-left: 0.25rem;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                </a>
+              </h3>
+
+              {rec.subtitle && <p class="rec-subtitle">{rec.subtitle}</p>}
+              <p class="rec-summary">{rec.summary}</p>
+            </div>
+
+            <div class="rec-card-footer" style="padding-top: 1rem; margin-top: 1rem; border-top: 1px solid var(--border-subtle);">
+              <div class="article-tags">
+                {rec.tags.slice(0, 2).map((tag) => (
+                  <a href={`/tags/${tag}/`} class="tag-chip">
+                    #{tag}
+                  </a>
+                ))}
+              </div>
+              <a href={rec.url} target="_blank" rel="noreferrer" class="button secondary rec-action-btn" style="font-size: 0.82rem; padding: 0.35rem 0.85rem;">
+                <span>Visit Link</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
   </section>
 
-  <section class="card">
-    <div class="pills">
-      {tags.map((tag) => <a class="pill" href={`/tags/${tag}/`}>#{tag}</a>)}
+  <!-- ARCHITECTURAL CAPABILITIES PREVIEW -->
+  <section class="section-container">
+    <div class="section-header-flex">
+      <div class="section-header-left">
+        <span class="eyebrow">Capabilities</span>
+        <h2 class="section-title">Core Architecture & Delivery Domains</h2>
+        <p class="section-subtitle">A focused preview of engineering disciplines and distributed system patterns.</p>
+      </div>
+      <a class="section-link" href="/skills/">
+        <span>View full technology matrix</span>
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <SkillsGrid skills={previewSkills} />
+  </section>
+
+  <!-- TOPIC HASHTAGS -->
+  <section class="section-container">
+    <div class="section-header-flex">
+      <div class="section-header-left">
+        <span class="eyebrow">Taxonomy</span>
+        <h2 class="section-title">Explore by Topic</h2>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="pills">
+        {tags.map((tag) => (
+          <a class="pill" href={`/tags/${tag}/`}>
+            #{tag}
+          </a>
+        ))}
+      </div>
     </div>
   </section>
 </BaseLayout>
