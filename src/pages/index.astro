@@ -36,6 +36,13 @@ const icons = {
   github: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.6 2 12.26c0 4.53 2.87 8.37 6.84 9.72.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.62-3.37-1.21-3.37-1.21-.46-1.2-1.11-1.53-1.11-1.53-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.04 1.03-2.76-.1-.27-.45-1.3.1-2.72 0 0 .84-.28 2.75 1.05A9.3 9.3 0 0 1 12 6.84c.85 0 1.7.12 2.5.36 1.9-1.33 2.74-1.05 2.74-1.05.55 1.42.2 2.45.1 2.72.64.72 1.03 1.64 1.03 2.76 0 3.93-2.35 4.79-4.59 5.04.36.32.68.93.68 1.88 0 1.36-.01 2.46-.01 2.79 0 .27.18.6.69.49A10.28 10.28 0 0 0 22 12.26C22 6.6 17.52 2 12 2"></path></svg>`,
   mail: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2m0 1.5v.3l8 5.2 8-5.2v-.3zm16 9V9.58l-7.46 4.85a1 1 0 0 1-1.08 0L4 9.58v6.92z"></path></svg>`
 };
+
+const actionConfig: Record<string, { label: string; emoji: string }> = {
+  article: { label: 'Read Article', emoji: '📄' },
+  book: { label: 'Explore Book', emoji: '📖' },
+  video: { label: 'Watch Video', emoji: '🎬' },
+  course: { label: 'Open Course', emoji: '🎓' }
+};
 ---
 
 <BaseLayout title={`${profile.name} | Senior Software Engineer & Architect`} description={`${profile.name} - Personal website, engineering blog, and architectural insights.`}>
@@ -247,9 +254,10 @@ const icons = {
                   </a>
                 ))}
               </div>
-              <a href={rec.url} target="_blank" rel="noreferrer" class="button secondary rec-action-btn" style="font-size: 0.82rem; padding: 0.35rem 0.85rem;">
-                <span>Visit Link</span>
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <a href={rec.url} target="_blank" rel="noreferrer" class="button secondary rec-action-btn">
+                <span class="rec-btn-emoji" aria-hidden="true">{actionConfig[rec.type]?.emoji || '🔗'}</span>
+                <span>{actionConfig[rec.type]?.label || 'Visit Resource'}</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
               </a>
             </div>
           </article>

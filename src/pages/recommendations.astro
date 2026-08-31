@@ -28,19 +28,11 @@ const statusLabels: Record<string, string> = {
   'to-do': 'To Do'
 };
 
-const getButtonLabel = (type: string) => {
-  switch (type) {
-    case 'article':
-      return 'Read Article';
-    case 'book':
-      return 'Explore Book';
-    case 'video':
-      return 'Watch Video';
-    case 'course':
-      return 'Open Course';
-    default:
-      return 'Visit Resource';
-  }
+const actionConfig: Record<string, { label: string; emoji: string }> = {
+  article: { label: 'Read Article', emoji: '📄' },
+  book: { label: 'Explore Book', emoji: '📖' },
+  video: { label: 'Watch Video', emoji: '🎬' },
+  course: { label: 'Open Course', emoji: '🎓' }
 };
 ---
 
@@ -189,8 +181,9 @@ const getButtonLabel = (type: string) => {
               rel="noreferrer"
               class="button secondary rec-action-btn"
             >
-              <span>{getButtonLabel(rec.type)}</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <span class="rec-btn-emoji" aria-hidden="true">{actionConfig[rec.type]?.emoji || '🔗'}</span>
+              <span>{actionConfig[rec.type]?.label || 'Visit Resource'}</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
             </a>
           </div>
         </article>
